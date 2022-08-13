@@ -1,38 +1,142 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.user-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 100%;
+  height: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.user-details {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
+.user-name {
+  margin-bottom: 0;
+}
+
+.user-back-button {
+  position: absolute;
+  left: 0;
+  top: 20px;
+}
+
+.user-avatar {
+  vertical-align: middle;
+  width: 100px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.email-status {
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.email-status-verified {
+  color: #00a650;
+}
+.email-status-unverified {
+  color: #ff0000;
+}
+
+.user-info-item {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.user-info-label {
+  color: #666;
+  margin-bottom: 5px;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+.user-info-value {
+  margin-top: 5px;
+}
+
+.user-skills {
+  display: flex;
+}
+
+.user-skill {
+  background: #3f51b5;
+  color: #fff;
+  border-radius: 8px;
+  padding: 4px;
+  margin-right: 5px;
+}
+
+.email-label {
+  display: flex;
+  align-items: center;
+}
+
+.users-table {
+  position: relative;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.users-table-container {
+  overflow-y: scroll;
+  height: 500px;
+  width: 100%;
+}
+
+.users-table-head {
+  top: 0;
+  position: sticky;
+  background: #3f51b5;
+  color: #fff;
+}
+
+.users-table-row:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #000;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #000 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
 }

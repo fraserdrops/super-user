@@ -21,7 +21,10 @@ export type Users = Array<User>;
 
 const readUsersFromFile = async (): Promise<Users> => {
   try {
-    const jsonString = await fs.promises.readFile("./db/users.json", "utf8");
+    const jsonString = await fs.promises
+      .readFile("./db/users.json", "utf8")
+      // delay the promise for a bit to give time for loading states to to show on the frontend
+      .then((value) => wait(1000, value));
     const users = JSON.parse(jsonString);
     return users;
   } catch (err) {
@@ -44,3 +47,8 @@ export const getUser = async (id: number): Promise<User> => {
   }
   return user;
 };
+
+// delay a promise for a given amount of time
+function wait<T>(ms: number, value: T) {
+  return new Promise<T>((resolve) => setTimeout(resolve, ms, value));
+}

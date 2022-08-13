@@ -21,12 +21,12 @@ type Props = {
 const RouterProvider = ({ children }: Props) => {
   const [route, setRoute] = useState(locationToRoute(history));
 
-  const handleRouteChange = (location: { location: Location }) => {
-    const route = locationToRoute(location);
-    setRoute(route);
-  };
-
   useLayoutEffect(() => {
+    const handleRouteChange = (location: { location: Location }) => {
+      const route = locationToRoute(location);
+      setRoute(route);
+    };
+
     let unlisten = history.listen(handleRouteChange);
     return () => {
       unlisten();

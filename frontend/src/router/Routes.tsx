@@ -9,6 +9,7 @@ type Props = {
 export default function Routes({ routeMap, fallback }: Props) {
   const { route, history } = React.useContext(RouterContext);
 
+  // find if current route matches any of the routes in the routeMap
   const matchedRoute = Object.keys(routeMap).find((path) => {
     const pathSegments = path.split("/");
     const routeSegments = route.path.split("/");
@@ -29,6 +30,7 @@ export default function Routes({ routeMap, fallback }: Props) {
     return isMatch;
   });
 
+  // if there's no match then use the fallback route
   if (!matchedRoute) {
     history.replace(fallback);
     return <>{routeMap[fallback]}</>;
