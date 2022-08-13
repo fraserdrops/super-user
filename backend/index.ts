@@ -8,7 +8,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello Typescript!");
 });
 
-app.get("/users", async (req: Request, res: Response, next: NextFunction) => {
+app.get("/api/users", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await getAllUsers();
     res.json(users);
@@ -18,7 +18,7 @@ app.get("/users", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-app.get("/users/:id", async (req: Request, res: Response, next: NextFunction) => {
+app.get("/api/users/:id", async (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id;
   try {
     const user = await getUser(parseInt(id));

@@ -1,25 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import AllUsers from "./pages/AllUsers";
+import User from "./pages/User";
+import { RouterProvider } from "./router/RouterContext";
+import Routes from "./router/Routes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider>
+      <Routes routeMap={{ "/users": <AllUsers />, "/users/:id": <User /> }} fallback="/users" />
+    </RouterProvider>
   );
 }
 
