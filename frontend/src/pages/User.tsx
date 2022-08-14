@@ -96,7 +96,7 @@ function User() {
   const routeSegments = route.path.split("/");
   const id = routeSegments[routeSegments.length - 1];
 
-  const { data, error, status } = useFetch<UserType>(`/api/users/${id}`);
+  const { data, error, status } = useFetch<UserType>(`http://localhost:5000/api/users/${id}`);
 
   if (status === "loading")
     return (

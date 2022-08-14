@@ -12,13 +12,11 @@ function AllUsers() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`/api/users`);
+        const response = await fetch(`http://localhost:5000/api/users`);
         if (!response.ok) {
           setError({ message: response.statusText, code: response.status });
         }
-        console.log(response);
         let actualData = (await response.json()) as Array<UserType>;
-        console.log("data", actualData);
         setData(actualData);
         setError(null);
       } catch (err) {
