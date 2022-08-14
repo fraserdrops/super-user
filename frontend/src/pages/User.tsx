@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
 import PageContent from "../components/PageContent";
 import { Link } from "../router/Link";
@@ -21,44 +21,84 @@ type Company = {
   department: string;
 };
 
+type ErrorInfo = { message: string; code?: number };
+
+interface State<T> {
+  data?: T;
+  error?: ErrorInfo;
+  status: "loading" | "success" | "error";
+}
+
+type Action<T> =
+  | { type: "loading" }
+  | { type: "dataLoaded"; data: T }
+  | { type: "error"; error: ErrorInfo };
+
+function useFetch<T>(url?: string): State<T> {
+  const initialState: State<T> = {
+    error: undefined,
+    data: undefined,
+    status: "loading",
+  };
+
+  const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
+    switch (action.type) {
+      case "loading":
+        return { ...initialState, status: "loading" };
+      case "dataLoaded":
+        return { ...initialState, data: action.data, status: "success" };
+      case "error":
+        return { ...initialState, error: action.error, status: "error" };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(fetchReducer, initialState);
+
+  useEffect(() => {
+    // Do nothing if the url is not given
+    if (!url) return;
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          dispatch({
+            type: "error",
+            error: { message: response.statusText, code: response.status },
+          });
+          throw new Error(response.statusText);
+        }
+
+        const data = (await response.json()) as T;
+        dispatch({ type: "dataLoaded", data });
+      } catch (error) {
+        let message;
+        //       // typescript gives Error a type unknown
+        //       // so we have to tell it we know there's a message with the error
+        //       // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
+        if (error instanceof Error) message = error.message;
+        else message = String(error);
+        dispatch({ type: "error", error: { message } });
+      }
+    };
+
+    void fetchData();
+  }, [url]);
+
+  return state;
+}
+
 function User() {
   // the last route segment is the id
   const { route } = useRouter();
   const routeSegments = route.path.split("/");
   const id = routeSegments[routeSegments.length - 1];
 
-  const [data, setData] = useState<null | UserType>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<null | { message: string; code?: number }>(null);
+  const { data, error, status } = useFetch<UserType>(`/api/users/${id}`);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await fetch(`/api/users/${id}`);
-        if (!response.ok) {
-          setError({ message: response.statusText, code: response.status });
-        } else {
-          let actualData = (await response.json()) as UserType;
-          setData(actualData);
-          setError(null);
-        }
-      } catch (err) {
-        let message;
-        // typescript gives Error a type unknown
-        // so we have to tell it we know there's a message with the error
-        // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
-        if (err instanceof Error) message = err.message;
-        else message = String(err);
-        setError({ message });
-        setData(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, [id]);
-
-  if (loading)
+  if (status === "loading")
     return (
       <div className="loading">
         <LoadingSpinner />
