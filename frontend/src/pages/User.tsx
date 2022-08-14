@@ -37,10 +37,11 @@ function User() {
         const response = await fetch(`/api/users/${id}`);
         if (!response.ok) {
           setError({ message: response.statusText, code: response.status });
+        } else {
+          let actualData = (await response.json()) as UserType;
+          setData(actualData);
+          setError(null);
         }
-        let actualData = (await response.json()) as UserType;
-        setData(actualData);
-        setError(null);
       } catch (err) {
         let message;
         // typescript gives Error a type unknown
@@ -66,10 +67,11 @@ function User() {
 
   if (error) {
     return (
-      <div>
+      <PageContent>
         <h2>{error.code}</h2>
+        <AllUsersLink />
         <p>{error.message}</p>
-      </div>
+      </PageContent>
     );
   }
   if (data) {
@@ -77,7 +79,8 @@ function User() {
     return (
       <PageContent>
         <h1 className="user-name">{`${first_name} ${last_name}`}</h1>
-        <BackButton />
+        <h3 className="user-id">ID: {id}</h3>
+        <AllUsersLink />
         {avatar && <img src={avatar} alt="Avatar" className="user-avatar"></img>}
         <UserInfoItem>
           <UserInfoLabel>
@@ -97,8 +100,8 @@ function User() {
         </UserInfoItem>
 
         <UserInfoItem>
-          <UserInfoLabel>Company</UserInfoLabel>
-          <UserInfoValue>{company.name + ", " + company.department}</UserInfoValue>
+          <UserInfoLabel>Company (Department)</UserInfoLabel>
+          <UserInfoValue>{`${company.name}  (${company.department})`}</UserInfoValue>
         </UserInfoItem>
 
         <UserInfoItem>
@@ -106,7 +109,9 @@ function User() {
           <UserInfoValue>
             <div className="user-skills">
               {skills.map((skill) => (
-                <div className="user-skill">{skill}</div>
+                <div key={skill} className="user-skill">
+                  {skill}
+                </div>
               ))}
             </div>
           </UserInfoValue>
@@ -133,10 +138,10 @@ function UserInfoValue(props: { children: React.ReactNode }) {
   return <div className="user-info-value">{children}</div>;
 }
 
-function BackButton() {
+function AllUsersLink() {
   return (
-    <button className="user-back-button">
-      <Link to="/users">Back</Link>
+    <button className="all-users-button">
+      <Link to="/users">All Users</Link>
     </button>
   );
 }

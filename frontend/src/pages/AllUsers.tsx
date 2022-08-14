@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
 import PageContent from "../components/PageContent";
-import { Link } from "../router/Link";
 import { useRouter } from "../router/RouterContext";
 import { UserType } from "./User";
 
@@ -68,7 +67,7 @@ function AllUsers() {
             </thead>
             <tbody>
               {data.map((user) => (
-                <UserRow user={user} />
+                <UserRow key={user.id} user={user} />
               ))}
             </tbody>
           </table>

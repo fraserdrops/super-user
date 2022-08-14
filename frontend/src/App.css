@@ -1,16 +1,27 @@
-.user-container {
+:root {
+  --dark-blue: #3f51b5;
+}
+
+.page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 100vh;
+  background: #e3f2fd;
+}
+.page-inner-container {
+  width: 100%;
+  max-width: 500px;
+  background: white;
   height: 100%;
 }
 
-.user-details {
+.page-content {
   display: flex;
-  width: 100%;
-  max-width: 500px;
+  padding: 0 15px;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -21,10 +32,28 @@
   margin-bottom: 0;
 }
 
-.user-back-button {
+.user-id {
+  margin: 0;
+  font-weight: 400;
+}
+
+.all-users-button {
   position: absolute;
-  left: 0;
+  left: 15px;
   top: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  background: #2196f3;
+  border-radius: 1px;
+  line-height: 20px;
+  font-weight: 300;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.all-users-button:hover {
+  background: #2196f3bb;
 }
 
 .user-avatar {
@@ -69,7 +98,7 @@
 }
 
 .user-skill {
-  background: #3f51b5;
+  background: var(--dark-blue);
   color: #fff;
   border-radius: 8px;
   padding: 4px;
@@ -96,7 +125,7 @@
 .users-table-head {
   top: 0;
   position: sticky;
-  background: #3f51b5;
+  background: var(--dark-blue);
   color: #fff;
 }
 
@@ -118,10 +147,10 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #000;
+  border: 8px solid var(--dark-blue);
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #000 transparent transparent transparent;
+  border-color: var(--dark-blue) transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
