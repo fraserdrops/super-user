@@ -40,7 +40,7 @@
 .all-users-button {
   position: absolute;
   left: 15px;
-  top: 20px;
+  top: 10px;
   cursor: pointer;
   padding: 5px 10px;
   border: none;
@@ -67,6 +67,7 @@
 .email-status {
   font-size: 12px;
   margin-left: 8px;
+  margin-top: 1px;
 }
 
 .email-status-verified {
@@ -83,14 +84,13 @@
 
 .user-info-label {
   color: #666;
-  margin-bottom: 5px;
   margin-top: 0;
   display: flex;
   align-items: center;
 }
 
 .user-info-value {
-  margin-top: 5px;
+  margin-top: 3px;
 }
 
 .user-skills {

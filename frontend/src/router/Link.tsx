@@ -14,12 +14,13 @@ export function Link({ to, children, onClick, ...props }: Props) {
     e.preventDefault();
 
     if (route.path === to) {
-      // If it's not a valid path function will not trigger.
       return;
     }
+
     if (onClick) {
       onClick(e);
     }
+
     history.push(to);
   };
 

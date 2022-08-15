@@ -1,6 +1,6 @@
-import express, { Express, Request, Response, NextFunction } from "express";
-import { User, Users, getUser, getAllUsers } from "./db";
 import cors from "cors";
+import express, { Express, NextFunction, Request, Response } from "express";
+import { getAllUsers, getUser } from "./db";
 
 const app: Express = express();
 const port = process.env.PORT || 5000;
@@ -31,7 +31,7 @@ app.get("/api/users/:id", async (req: Request, res: Response, next: NextFunction
     const user = await getUser(parseInt(id));
     res.json(user);
   } catch (err) {
-    console.log("Error getting user");
+    console.log(`Error getting user with id ${id}`);
     res.statusMessage = "User not found!";
     res.status(404).end();
   }

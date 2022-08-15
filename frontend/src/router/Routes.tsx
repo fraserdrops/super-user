@@ -10,21 +10,21 @@ export default function Routes({ routeMap, fallback }: Props) {
   const { route, history } = React.useContext(RouterContext);
 
   // find if current route matches any of the routes in the routeMap
-  const matchedRoute = Object.keys(routeMap).find((path) => {
-    const pathSegments = path.split("/");
-    const routeSegments = route.path.split("/");
+  const matchedRoute = Object.keys(routeMap).find((routeToMatch) => {
+    const routeToMatchSegments = routeToMatch.split("/");
+    const currentRouteSegments = route.path.split("/");
 
     // is a match if the path has the same number of segments as the route
     // and each segment matches the route segment
     const isMatch =
-      pathSegments.length === routeSegments.length &&
-      pathSegments.every((pathSegment, index) => {
+      routeToMatchSegments.length === currentRouteSegments.length &&
+      routeToMatchSegments.every((routeToMatchSegment, index) => {
         // : indicates a placeholder for a parameter
-        // if the path segment is a placeholder and the route segment has a value then it's a match
-        if (pathSegment[0] === ":" && routeSegments[index]) {
+        // if the routeToMatch segment is a placeholder and the current route segment has a value then it's a match
+        if (routeToMatchSegment[0] === ":" && currentRouteSegments[index]) {
           return true;
         }
-        return pathSegment === routeSegments[index];
+        return routeToMatchSegment === currentRouteSegments[index];
       });
 
     return isMatch;

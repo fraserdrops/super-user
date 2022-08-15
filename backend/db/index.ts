@@ -7,7 +7,7 @@ export type User = {
   last_name: string;
   email: string;
   emailVerified: boolean;
-  dob: Date;
+  dob: string;
   company: Company;
   skills: string[];
 };
@@ -42,7 +42,6 @@ export const getUser = async (id: number): Promise<User> => {
   const users = await readUsersFromFile();
   const user = users.find((user: User) => user.id === id);
   if (!user) {
-    const error = new Error(`User with id ${id} not found`);
     throw new Error(`User with id ${id} not found`);
   }
   return user;

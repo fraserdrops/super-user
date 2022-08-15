@@ -83,7 +83,7 @@ function UserRow(props: { user: UserType }) {
   const { history } = useRouter();
   return (
     // html tables don't allow you to wrap a row in an anchor tag
-    // so I need to fire the router manually
+    // so we need to fire the router manually
     <tr className="users-table-row" onClick={() => history.push(`/users/${id}`)}>
       <td>{first_name}</td>
       <td>{last_name}</td>

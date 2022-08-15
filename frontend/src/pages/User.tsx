@@ -57,7 +57,6 @@ function useFetch<T>(url?: string): State<T> {
   const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {
-    // Do nothing if the url is not given
     if (!url) return;
 
     const fetchData = async () => {
@@ -75,9 +74,9 @@ function useFetch<T>(url?: string): State<T> {
         dispatch({ type: "dataLoaded", data });
       } catch (error) {
         let message;
-        //       // typescript gives Error a type unknown
-        //       // so we have to tell it we know there's a message with the error
-        //       // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
+        // typescript gives Error the type unknown
+        // so we have to tell it we know there's a message with the error
+        // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
         if (error instanceof Error) message = error.message;
         else message = String(error);
         dispatch({ type: "error", error: { message } });
